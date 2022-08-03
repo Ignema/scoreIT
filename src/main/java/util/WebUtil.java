@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class WebUtil {
     private static final Pattern urlPattern = Pattern.compile("href=\"(?!#|java)(.+?)(\\?|\"|#)");
-    private static final Pattern validUrlPattern = Pattern.compile("[^(/|?|\"|tel)].+");
+    private static final Pattern validUrlPattern = Pattern.compile("[^(/|?|\"|tel|android|ios)].+");
 
     public static void processURL(String url, Set<String> collectedUrls, int depth) {
         //System.out.printf("Processing URL: %s%n", url);
@@ -46,7 +46,7 @@ public class WebUtil {
                 .forEach(page -> {
                     Matcher urlMatcher = urlPattern.matcher(page);
                     while (urlMatcher.find()) {
-                        urls.add(urlMatcher.group(1));
+                        urls.add(urlMatcher.group(1).replace(" ", "%20"));
                     }
                 });
 
